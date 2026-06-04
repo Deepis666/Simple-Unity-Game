@@ -13,7 +13,6 @@ public class EnemyAI : MonoBehaviour
 
     [Header("References")]
     public NavMeshAgent agent;
-    public Animator animator;
     public Transform player;
 
     private PlayerHealth playerHealth;
@@ -26,12 +25,6 @@ public class EnemyAI : MonoBehaviour
         if (agent == null)
         {
             agent = GetComponent<NavMeshAgent>();
-        }
-
-        // 自动获取Animator
-        if (animator == null)
-        {
-            animator = GetComponent<Animator>();
         }
 
         // 查找玩家
@@ -90,7 +83,6 @@ public class EnemyAI : MonoBehaviour
             // 继续追击
             agent.isStopped = false;
             agent.SetDestination(player.position);
-            animator.SetBool("Walk", true);
         }
     }
 
@@ -100,7 +92,6 @@ public class EnemyAI : MonoBehaviour
     private void StopChase()
     {
         agent.isStopped = true;
-        animator.SetBool("Walk", false);
     }
 
     /// <summary>
@@ -115,9 +106,6 @@ public class EnemyAI : MonoBehaviour
         }
 
         lastAttackTime = Time.time;
-
-        // 触发攻击动画
-        animator.SetTrigger("Attack");
 
         // 对玩家造成伤害
         if (playerHealth != null)
@@ -141,7 +129,6 @@ public class EnemyAI : MonoBehaviour
     {
         isDead = true;
         agent.isStopped = true;
-        animator.SetBool("Walk", false);
     }
 
     /// <summary>
